@@ -2,6 +2,8 @@ package com.idlefish.flutterboost.containers;
 
 import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.LifecycleRegistry;
 import android.graphics.Color;
 import android.view.*;
 import android.content.Context;
@@ -28,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class FlutterFragment extends Fragment implements FlutterActivityAndFragmentDelegate.Host {
+public class FlutterFragment extends Fragment implements FlutterActivityAndFragmentDelegate.Host, LifecycleOwner {
 
     private static final String TAG = "NewFlutterFragment";
 
@@ -108,6 +110,13 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
         return new NewEngineFragmentBuilder();
     }
 
+    private LifecycleRegistry lifecycle=new LifecycleRegistry(this);;
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return this.lifecycle;
+    }
 
     public static class NewEngineFragmentBuilder {
         private final Class<? extends FlutterFragment> fragmentClass;
@@ -253,6 +262,12 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
         delegate.onAttach(context);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -263,6 +278,7 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
     @Override
     public void onStart() {
         super.onStart();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_START);
         if (!isHidden()) {
             delegate.onStart();
         }
@@ -271,6 +287,7 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
     @Override
     public void onResume() {
         super.onResume();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
         if (!isHidden()) {
             delegate.onResume();
         }
@@ -289,6 +306,7 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
         if (!isHidden()) {
             delegate.onPause();
         }
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);
     }
 
     @Override
@@ -297,6 +315,13 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
         if (!isHidden()) {
             delegate.onStop();
         }
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_STOP);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
     }
 
     @Override
