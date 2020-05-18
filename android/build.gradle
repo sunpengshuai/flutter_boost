@@ -18,6 +18,7 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
+        maven { url "http://artifactory.client.weibo.cn/artifactory/android_lib_aars/" }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
@@ -46,8 +47,13 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.0.1'
     compileOnly 'com.android.support:design:26.0.1'
     implementation 'com.android.support:support-v4:26.0.1'
-    implementation 'android.arch.lifecycle:common-java8:1.1.1'
+//    implementation 'android.arch.lifecycle:common-java8:1.1.1'
     compileOnly 'com.alibaba:fastjson:1.2.41'
+
+    implementation 'com.sina.weibo.lib:lifecycle-common:1.1.1'
+    implementation 'com.sina.weibo.lib:lifecycle-common-java8:1.1.1'
+    implementation 'com.sina.weibo.lib:lifecycle-core-common:1.1.1'
+    implementation 'com.sina.weibo.lib:lifecycle-runtime:1.1.1@aar'
 }
 
 ext {
