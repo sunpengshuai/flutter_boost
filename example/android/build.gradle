@@ -24,6 +24,20 @@ allprojects {
     }
 }
 
+
+subprojects {project->
+        //根据提示使用对应的版本
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support'
+                        && !details.requested.name.contains('multidex') ) {
+                    details.useVersion "26.0.1"
+                }
+            }
+        }
+}
+
+
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
