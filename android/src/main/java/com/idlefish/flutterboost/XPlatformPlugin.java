@@ -290,23 +290,23 @@ public class XPlatformPlugin {
 
 
     private List<Rect> getSystemGestureExclusionRects() {
-        if (Build.VERSION.SDK_INT >= 29) {
-            Window window = activity.getWindow();
-            View view = window.getDecorView();
-            return view.getSystemGestureExclusionRects();
-        }
+//        if (Build.VERSION.SDK_INT >= 29) {
+//            Window window = activity.getWindow();
+//            View view = window.getDecorView();
+//            return view.getSystemGestureExclusionRects();
+//        }
 
         return null;
     }
 
     private void setSystemGestureExclusionRects(ArrayList<Rect> rects) {
-        if (Build.VERSION.SDK_INT < 29) {
-            return;
-        }
-
-        Window window = activity.getWindow();
-        View view = window.getDecorView();
-        view.setSystemGestureExclusionRects(rects);
+//        if (Build.VERSION.SDK_INT < 29) {
+//            return;
+//        }
+//
+//        Window window = activity.getWindow();
+//        View view = window.getDecorView();
+//        view.setSystemGestureExclusionRects(rects);
     }
 
 }
